@@ -35,7 +35,7 @@ class PostingController extends Controller
             ["cardId" => "UMHUTANG", "cardName" => "UM Hutang", "cardIcon" => "fa fa-times"],
             ["cardId" => "PIUTANGSEMENTARA", "cardName" => "Piutang Sementara", "cardIcon" => "fa fa-times"],
             ["cardId" => "HUTANGSEMENTARA", "cardName" => "Hutang Sementara", "cardIcon" => "fa fa-times"],
-            ["cardId" => "RLTAHUNLALU", "cardName" => "RL Tahun Lalu", "cardIcon" => "fa fa-times"],
+            ["cardId" => "RLTAHUNLALU", "cardName" => "RL Tahun Lalu", "cardIcon" => "fa fa-money-bill-wave", "cardComponent" => "kas", "modalWidth" => "md"],
             ["cardId" => "RLTAHUNINI", "cardName" => "RL Tahun Ini", "cardIcon" => "fa fa-times"],
             ["cardId" => "RLBULANINI", "cardName" => "RL Bulan Ini", "cardIcon" => "fa fa-times"],
             ["cardId" => "SELISIH", "cardName" => "Selisih", "cardIcon" => "fa fa-times"],
@@ -117,8 +117,11 @@ class PostingController extends Controller
             case 'AKTIVA':
                 return $this->getAllKelompokAktiva();
                 break;
+            case 'RLTAHUNLALU':
+                return $this->getAllKelompokKas('RLL');
+                break;   
             default:
-                return $this->setResponseError('Halaman tidak ditemukan', 500);
+                return $this->setResponseError('Halaman tidak ditemukan Cuk', 500);
                 break;
         }
     }
@@ -166,8 +169,18 @@ class PostingController extends Controller
                     'callback' => "postingAktiva()"
                 ];
                 break;
+            case 'RLTAHUNLALU':
+                $url = route('master-data.master-accounting.posting.getTable', ['posting' => $kode]);
+                return [
+                    'formAction' => $url,
+                    'modalTitle' => 'Kelompok Rugi Laba Tahun Lalu',
+                    'component' => $component,
+                    'datatableUrl' => $url,
+                    'callback' => "postingKAS('formPostingKAS')"
+                ];
+                break;             
             default:
-                return abort(404, 'Halaman tidak ditemukan');
+                return abort(404, 'Halaman tidak ditemukan Cuk2');
                 break;
         }
     }
@@ -194,9 +207,13 @@ class PostingController extends Controller
                 if ($this->globalRepository->storeKelompokAktiva($request, $request->oldPerkiraan)) {
                     return $this->setResponseSuccess();
                 }
-                break;
+            case 'RLTAHUNLALU':
+            if ($this->globalRepository->storeKelompokKasOrBank($request->Perkiraan, $request->oldPerkiraan, 'RLL')) {
+                    return $this->setResponseSuccess();
+                }
+            break;
         }
-        return $this->setResponseError('Halaman tidak ditemukan', 500);
+        return $this->setResponseError('Halaman tidak ditemukan Cuk 3', 500);
     }
 
     public function deletePosting($posting, $id)
@@ -221,8 +238,12 @@ class PostingController extends Controller
                 if ($this->globalRepository->deleteKelompokAktiva($id)) {
                     return $this->setResponseData(['datatable' => 'datatableMain']);
                 }
+            case 'RLTAHUNLALU':
+                if ($this->globalRepository->deleteKelompokKasOrBank($id, 'RLL')) {
+                        return $this->setResponseData(['datatable' => 'datatableMain']);
+                }
                 break;
         }
-        return $this->setResponseError('Halaman tidak ditemukan', 500);
+        return $this->setResponseError('Halaman tidak ditemukan Cuk4', 500);
     }
 }

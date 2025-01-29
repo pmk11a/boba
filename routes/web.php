@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     SetPemakaiController,
     ShareController,
     TestController,
+    MasterMenuController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
         //perusahaan
         Route::get('perusahaan', [MasterPerusahaanController::class, 'index'])->name('perusahaan.index')->middleware('policy:HASACCESS,0003');
         Route::post('perusahaan/{type}', [MasterPerusahaanController::class, 'update'])->name('perusahaan.update')->where('type', 'perusahaan|nomor')->middleware('policy:ISKOREKSI,0003');
+        // Menu
+        Route::get('menumaster', [MasterMenuController::class, 'index'])->name('mastermenu.index')->middleware('policy:HASACCESS,00031');
 
         //set pemakai
         Route::get('set-pemakai', [SetPemakaiController::class, 'index'])->name('set-pemakai.index')->middleware('policy:HASACCESS,0004');
