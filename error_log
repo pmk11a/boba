@@ -1,0 +1,5 @@
+[21-Aug-2022 14:26:30 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[21-Aug-2022 14:27:19 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[04-Sep-2022 12:14:23 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[28-Nov-2024 09:15:39 UTC] PHP Warning:  Version warning: Imagick was compiled against ImageMagick version 1692 but version 1693 is loaded. Imagick will run but may behave surprisingly in Unknown on line 0
+[28-Nov-2024 09:16:48 UTC] PHP Warning:  Version warning: Imagick was compiled against ImageMagick version 1692 but version 1693 is loaded. Imagick will run but may behave surprisingly in Unknown on line 0

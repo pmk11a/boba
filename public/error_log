@@ -1,0 +1,1 @@
+[19-Nov-2024 21:26:28 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 120 seconds exceeded in /home/pmkmyid/me.pmk.my.id/vendor/dompdf/dompdf/src/FrameDecorator/AbstractFrameDecorator.php on line 288
